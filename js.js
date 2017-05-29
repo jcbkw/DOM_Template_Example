@@ -2,27 +2,20 @@ $(function () {
     
     function renderPage (container, content, layoutHtml) {
         
-        container.append(layoutHtml);
+        var layoutTpl = Handlebars.compile(layoutHtml);
         
-        container.find('.mh-title').text(content.title);
-        container.find('.main-content').prepend(content.subtitle);
+        container.append(layoutTpl(content));
         
     }
     
     function renderList (container, data, contactHtml) {
         
         var ul = container.find('.plain-list'),
-            liTpl = $(contactHtml);
+            liTpl = Handlebars.compile(contactHtml);
         
         data.forEach(function (person) {
             
-            var li = liTpl.clone();
-            
-            li.find('.col-1').text(person.firstname);
-            li.find('.col-2').text(person.lastname);
-            li.find('.col-3').text(person.phone);
-            
-            ul.append(li);
+            ul.append(liTpl(person));
             
         });
         
